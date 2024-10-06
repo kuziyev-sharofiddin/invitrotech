@@ -88,11 +88,7 @@
                 @if($products->isNotEmpty())
                     <nav class="woocommerce-pagination">
                         <ul class='page-numbers'>
-                            <li><span aria-current="page" class="page-numbers current">1</span></li>
-                            <li><a class="page-numbers" href="page/2/index.htm">2</a></li>
-                            <li><a class="page-numbers" href="page/3/index.htm">3</a></li>
-                            <li><a class="page-numbers" href="page/4/index.htm">4</a></li>
-                            <li><a class="next page-numbers" href="page/2/index.htm">&rarr;</a></li>
+                            {{ $products->links() }}
                         </ul>
                     </nav>
                 @endif

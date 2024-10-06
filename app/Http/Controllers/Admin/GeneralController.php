@@ -35,6 +35,7 @@ class GeneralController extends Controller
         $parentCategories = ParentCategory::query()->get();
         $parentcategory = ParentCategory::query()->where(['name'=>$name])->first();
         $products = $parentcategory->products()->paginate(10);
+        Paginator::useBootstrap();
         return view('nordiccell.pages.parent_category_products', compact('products','parentCategories','parentcategory'));
     }
 
@@ -42,6 +43,7 @@ class GeneralController extends Controller
         $parentCategories = ParentCategory::query()->get();
         $category = Category::query()->where(['name'=>$name])->first();
         $products = $category->products()->paginate(10);
+        Paginator::useBootstrap();
         return view('nordiccell.pages.category_products', compact('products','parentCategories','category'));
     }
 
@@ -49,6 +51,7 @@ class GeneralController extends Controller
         $parentCategories = ParentCategory::query()->get();
         $subCategory = SubCategory::query()->where(['name'=>$name])->first();
         $products = $subCategory->products()->paginate(10);
+        Paginator::useBootstrap();
         return view('nordiccell.pages.sub_category_products', compact('products','parentCategories','subCategory'));
     }
 
@@ -56,6 +59,7 @@ class GeneralController extends Controller
         $parentCategories = ParentCategory::query()->get();
         $subCategoryItem = SubCategoryItem::query()->where(['name'=>$name])->first();
         $products = $subCategoryItem->products()->paginate(10);
+        Paginator::useBootstrap();
         return view('nordiccell.pages.sub_category_item_products', compact('products','parentCategories'));
     }
 
@@ -79,6 +83,13 @@ class GeneralController extends Controller
         return view('admin.pages.users.user', compact('users'));
     }
 
+    public function userDestroy($user)
+    {
+        $user = User::query()->findOrFail($user);
+        $user->delete();
+        return redirect()->back();
+    }
+
     public function userChangeStatus($id, Request $request)
     {
         $user = User::query()->findOrFail($id);
@@ -90,11 +101,5 @@ class GeneralController extends Controller
             $user->save();
         }
         return redirect()->back();
-    }
-    public function userDestroy(string $id)
-    {
-        $user = User::query()->findOrFail($id);
-        $user->delete();
-        return redirect()->route('users');
     }
 }

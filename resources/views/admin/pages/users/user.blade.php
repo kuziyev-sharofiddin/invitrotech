@@ -104,7 +104,7 @@
                                 <td>
                                     <div class="text-end">
                                         <div class="btn-group">
-                                            <form action="{{ route('user.destroy', ['user'=> $user->id]) }}" method="POST" style="display: inline;">
+                                            <form action="{{ route('user-destroy', ['user'=> $user->id]) }}" method="POST" style="display: inline;">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger btn-sm px-4 delete" onclick="return confirm('Are you sure you want to delete this item?');">

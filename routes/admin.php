@@ -27,6 +27,7 @@ Route::get('logout', [\App\Http\Controllers\Admin\AuthController::class, 'logout
     Route::get('product/{product}/images', [\App\Http\Controllers\Admin\GeneralController::class, 'index'])->name('products.images');
     Route::get('product/{product}/sub_products', [\App\Http\Controllers\Admin\GeneralController::class, 'subProduct'])->name('products.sub_products');
     Route::get('users', [\App\Http\Controllers\Admin\GeneralController::class, 'users'])->name('users');
+    Route::delete('user/delete{user}', [\App\Http\Controllers\Admin\GeneralController::class, 'userDestroy'])->name('user-destroy');
     Route::get('orders', [\App\Http\Controllers\Admin\OrderController::class, 'orders'])->name('orders');
     Route::delete('order/delete/{order}', [\App\Http\Controllers\Admin\OrderController::class, 'destroy'])->name('order.destroy');
     Route::delete('order-item/delete/{order}', [\App\Http\Controllers\Admin\OrderController::class, 'orderItemDestroy'])->name('orderItem.destroy');
