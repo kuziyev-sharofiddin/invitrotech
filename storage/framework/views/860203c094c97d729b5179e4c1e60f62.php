@@ -45,12 +45,13 @@
 
                     <h1 class="woocommerce-products-header__title page-title" style="display: none;"> Equipment</h1>
 
+
                 </header>
                 <div class="woocommerce-notices-wrapper"></div>
                 <ul class="product-categories">
                     <?php $__currentLoopData = $parentCategories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <li class="product-category">
-                            <a href="heating-devices/index.htm" class="heating-devices"><?php echo e($category->name); ?></a>
+                            <a href="<?php echo e(route('parent_category.products', ['name'=>$category->name])); ?>" class="heating-devices"><?php echo e($category->name); ?></a>
                         </li>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </ul>

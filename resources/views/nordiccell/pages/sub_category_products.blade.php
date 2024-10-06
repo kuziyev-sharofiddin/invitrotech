@@ -27,7 +27,7 @@
                 <div class="woocommerce-notices-wrapper"></div><ul class="product-categories">
                     @foreach($subCategory->subCategoryItems as $subCategoryItem)
                     <li class="product-category">
-                        <a href="dry-block-heaters/index.htm" class="dry-block-heaters">{{$subCategoryItem->name}}</a>
+                        <a href="{{route('sub_category_item.products', ['name'=>$subCategoryItem->name])}}" class="dry-block-heaters">{{$subCategoryItem->name}}</a>
                     </li>
                     @endforeach
                 </ul>

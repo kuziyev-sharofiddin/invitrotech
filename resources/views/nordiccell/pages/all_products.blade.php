@@ -46,12 +46,13 @@
 
                     <h1 class="woocommerce-products-header__title page-title" style="display: none;"> Equipment</h1>
 
+
                 </header>
                 <div class="woocommerce-notices-wrapper"></div>
                 <ul class="product-categories">
                     @foreach($parentCategories as $category)
                         <li class="product-category">
-                            <a href="heating-devices/index.htm" class="heating-devices">{{$category->name}}</a>
+                            <a href="{{route('parent_category.products', ['name'=>$category->name])}}" class="heating-devices">{{$category->name}}</a>
                         </li>
                     @endforeach
                 </ul>

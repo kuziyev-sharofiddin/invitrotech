@@ -51,7 +51,7 @@
                 <ul class="product-categories">
                     @foreach($parentcategory->categories as $category)
                         <li class="product-category">
-                            <a href="heating-devices/index.htm" class="heating-devices">{{$category->name}}</a>
+                            <a href="{{route('category.products', ['name'=>$category->name])}}" class="heating-devices">{{$category->name}}</a>
                         </li>
                     @endforeach
                 </ul>
