@@ -36,7 +36,8 @@
                     <div class="post-content">
 
                         <div class="woocommerce"><div class="woocommerce-notices-wrapper"></div><div class="woocommerce-notices-wrapper"></div>
-                            <form name="checkout" method="post" class="checkout woocommerce-checkout" action="https://nordiccell.com/checkout/" enctype="multipart/form-data" novalidate="novalidate" data-gtm-form-interact-id="0">
+                            <form name="checkout" method="post" class="checkout woocommerce-checkout" action="{{route('order.store')}}" enctype="multipart/form-data" novalidate="novalidate" data-gtm-form-interact-id="0">
+                                @csrf
 
 
                                 <div class="checkout-optimizer  checkout-optimizer__col2-set"><div class="checkout-optimizer checkout-optimizer__col-1">
@@ -131,20 +132,24 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
+                                                @foreach($carts as $cart)
+                                                    @foreach($cart->products as $product)
                                                 <tr class="cart_item">
                                                     <td class="product-name">
                                                         <a href="https://nordiccell.com/product/exem-foam-kit-excl-catheter-2/">
-                                                            <img width="300" height="300" src="https://nordiccell.com/wp-content/uploads/2024/03/13049_1_DSF7925-copy@0.5x-300x300.jpg" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="" decoding="async" loading="lazy" srcset="https://nordiccell.com/wp-content/uploads/2024/03/13049_1_DSF7925-copy@0.5x-300x300.jpg 300w, https://nordiccell.com/wp-content/uploads/2024/03/13049_1_DSF7925-copy@0.5x-1024x1024.jpg 1024w, https://nordiccell.com/wp-content/uploads/2024/03/13049_1_DSF7925-copy@0.5x-150x150.jpg 150w, https://nordiccell.com/wp-content/uploads/2024/03/13049_1_DSF7925-copy@0.5x-768x768.jpg 768w, https://nordiccell.com/wp-content/uploads/2024/03/13049_1_DSF7925-copy@0.5x-1536x1536.jpg 1536w, https://nordiccell.com/wp-content/uploads/2024/03/13049_1_DSF7925-copy@0.5x-2048x2048.jpg 2048w, https://nordiccell.com/wp-content/uploads/2024/03/13049_1_DSF7925-copy@0.5x-125x125.jpg 125w, https://nordiccell.com/wp-content/uploads/2024/03/13049_1_DSF7925-copy@0.5x-721x721.jpg 721w, https://nordiccell.com/wp-content/uploads/2024/03/13049_1_DSF7925-copy@0.5x-100x100.jpg 100w" sizes="(max-width: 300px) 100vw, 300px">                        </a>
+                                                            <img width="300" height="300" src="{{$product->product_images->sortBy('created_at')->first()->getImageUrl()}}" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="" decoding="async" loading="lazy" srcset="{{$product->product_images->sortBy('created_at')->first()->getImageUrl()}}" sizes="(max-width: 300px) 100vw, 300px">                        </a>
 
                                                         <a href="https://nordiccell.com/product/exem-foam-kit-excl-catheter-2/">
-                                                            <span class="product-name-title">ExEm Foam Kit (excl. Catheter)</span>
+                                                            <span class="product-name-title">{{$product->title}}</span>
                                                         </a>
-                                                        <span class="price sku">Ref. 13049</span> <span class="separator">|</span>
-                                                        <span class="quantity">3 × <span class="woocommerce-Price-amount amount"><bdi>468,14&nbsp;<span class="woocommerce-Price-currencySymbol">EUR</span></bdi></span></span>
+                                                        <span class="price sku">{{$product->ref_number}}</span> <span class="separator">|</span>
+                                                        <span class="quantity">{{$cart->quantity}} × <span class="woocommerce-Price-amount amount"><bdi>{{$product->price}}&nbsp;<span class="woocommerce-Price-currencySymbol">EUR</span></bdi></span></span>
                                                     </td>
                                                     <td class="product-total">
-                                                        <span class="woocommerce-Price-amount amount"><bdi>1.404,42&nbsp;<span class="woocommerce-Price-currencySymbol">EUR</span></bdi></span>                    </td>
+                                                        <span class="woocommerce-Price-amount amount"><bdi>{{$cart->price}}&nbsp;<span class="woocommerce-Price-currencySymbol">EUR</span></bdi></span>                    </td>
                                                 </tr>
+                                                    @endforeach
+                                                @endforeach
                                                 </tbody>
                                                 <tfoot>
 
@@ -162,7 +167,7 @@
 
                                                 <tr class="order-total">
                                                     <th>Total*</th>
-                                                    <td><strong><span class="woocommerce-Price-amount amount"><bdi>1.404,42&nbsp;<span class="woocommerce-Price-currencySymbol">EUR</span></bdi></span></strong> </td>
+                                                    <td><strong><span class="woocommerce-Price-amount amount"><bdi>{{$totalPrice}}&nbsp;<span class="woocommerce-Price-currencySymbol">EUR</span></bdi></span></strong> </td>
                                                 </tr>
 
                                                 <tr class="order-total-notification">
@@ -278,6 +283,7 @@
                                                             <p>SWIFT:	NDEADKK</p>
                                                             <p>Iban:	DK7020000758945561	</p>
                                                             <div style="height:40px" aria-hidden="true" class="wp-block-spacer"></div>
+
                                                         </div>
                                                         <p class="form-row validate-required woocommerce-validated">
                                                             <label class="woocommerce-form__label woocommerce-form__label-for-checkbox checkbox">
@@ -289,7 +295,7 @@
                                                     </div>
 
 
-                                                    <button type="submit" class="button alt" name="woocommerce_checkout_place_order" id="place_order" value="Place order" data-value="Place order">Place order</button>
+                                                    <button type="submit" class="button alt" name="woocommerce_checkout_place_order" value="Place order" data-value="Place order">Place order</button>
 
                                                     <input type="hidden" id="woocommerce-process-checkout-nonce" name="woocommerce-process-checkout-nonce" value="9842b0b1f0"><input type="hidden" name="_wp_http_referer" value="/?wc-ajax=update_order_review">	</div>
                                             </div>

@@ -28,5 +28,6 @@ Route::post('/add/{product}/cart', [\App\Http\Controllers\Nordiccell\CartControl
 Route::get('/show/cart', [\App\Http\Controllers\Nordiccell\CartController::class, 'showCart'])->name('show_cart');
 Route::get('/cart/{cart}/delete', [\App\Http\Controllers\Nordiccell\CartController::class, 'removeCart'])->name('remove_cart');
 Route::get('/order', [\App\Http\Controllers\Nordiccell\OrderController::class, 'order'])->name('order');
+Route::post('/order', [\App\Http\Controllers\Nordiccell\OrderController::class, 'cashOrder'])->name('order.store');
 
 Route::get('/cart-count', [\App\Http\Controllers\Nordiccell\CartController::class, 'getCartCount']);

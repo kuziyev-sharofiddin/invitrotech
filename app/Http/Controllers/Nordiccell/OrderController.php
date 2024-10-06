@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Nordiccell;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
+use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\ParentCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,30 +20,44 @@ class OrderController extends Controller
         return $order;
     }
 
-    public function cashOrder($order){
-        $user = Auth::user()->id;
-        $carts = $this->cartRepository->getUserId($user);
-        foreach($carts as $cart){
-            $order = $this->repository->getById($order);
-            $order->user_id = $cart->user_id;
-            $order->product_title = $cart->product_title;
-            $order->price = $cart->price;
-            $order->quantity = $cart->quantity;
-            $order->image = $cart->image;
-            $order->product_id = $cart->product_id;
-            $order->payment_status = 'cash on delivery';
-            $order->delivery_status = 'processing';
-            $order->save();
+    public function cashOrder(Request $request){
 
-            $cart_id = $cart->id;
-            $cartId = $this->cartRepository->getById($cart_id);
-            $cartId->delete();
+        $user = auth()->user();
+
+        $cartItems = Cart::query()->where('user_id', $user->id)->get();
+
+        $totalPrice = 0;
+        foreach ($cartItems as $item) {
+            $totalPrice += $item->price;
         }
-        return $order;
+
+        $order = Order::query()->create([
+            'user_id' => $user->id,
+            'total_price' => $totalPrice,
+//            'order_ref' => $request->order_ref,
+//            'order_notes' => $request->order_notes,
+            'status' => 'pending',
+        ]);
+        foreach ($cartItems as $item) {
+            foreach ($item->products as $product) {
+            OrderItem::query()->create([
+                'order_id' => $order->id,
+                'product_id' => $product->id,
+                'quantity' => $item->quantity,
+                'price' => $item->price,
+            ]);
+            }
+        }
+        Cart::query()->where('user_id', $user->id)->delete();
+
+        return redirect('/');
     }
 
     public function order() {
+        $user = auth()->user();
+        $carts = Cart::query()->where('user_id',$user->id)->get();
+        $totalPrice = $carts->sum('price');
         $parentCategories = ParentCategory::query()->get();
-        return view('nordiccell.pages.order', compact('parentCategories'));
+        return view('nordiccell.pages.order', compact('parentCategories','carts','totalPrice'));
     }
 }

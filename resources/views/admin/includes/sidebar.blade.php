@@ -3,7 +3,7 @@
      data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
     <div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
         <a href="/admin/dashboard">
-            <img alt="Logo" src="/wp-content/themes/nordiccell/assets/dist/img/img_1.jpg"
+            <img alt="Logo" src="/wp-content/themes/nordiccell/assets/dist/img/img_1.png"
                  class="h-30px app-sidebar-logo-default"/>
             <img alt="Logo" src="/image/favicon.svg" class="h-30px app-sidebar-logo-minimize"/>
         </a>
@@ -118,7 +118,7 @@
                 </div>
 
                 <div class="menu-item">
-                    <a href="#" class="menu-link">
+                    <a href="{{route('orders')}}" class="menu-link">
             <span class="menu-icon">
                 <i class="ki-duotone ki-home-3 fs-2">
                     <span class="path1"></span>

@@ -19,6 +19,7 @@ class CartController extends Controller
      */
     public function addCart($product, Request $request)
     {
+//        dd($request);
         $user = Auth::user();
 
         $hasCartProduct = Cart::where('user_id', $user->id)
@@ -47,21 +48,21 @@ class CartController extends Controller
             if ($productModel->discount_price != null) {
                 $cartModel->price = $productModel->discount_price * $request->quantity;
             } else {
-                $cartModel->price = $productModel->price * $request->quantity;;
+                $cartModel->price = $productModel->price * $request->quantity;
             }
             $cartModel->quantity = $request->quantity;
             $cartModel->save();
             $cartModel->products()->attach($product);
             return redirect()->back();
         }
-        session()->put('cart', $cartModel);
     }
     public function showCart()
     {
         $user = Auth::user();
         $parentCategories = ParentCategory::query()->get();
         $carts = Cart::query()->where('user_id',$user->id)->get();
-        return view('nordiccell.pages.cart_show', compact('parentCategories','carts'));
+        $totalPrice = $carts->sum('price');
+        return view('nordiccell.pages.cart_show', compact('parentCategories','carts','totalPrice'));
     }
 
     public function removeCart($cart)

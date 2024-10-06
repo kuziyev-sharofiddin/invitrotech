@@ -2167,7 +2167,7 @@
                                             <tr class="order-total">
                                                 <th>Total*</th>
                                                 <td data-title="Total"><strong><span
-                                                            class="woocommerce-Price-amount amount"><bdi>40,24&nbsp;<span
+                                                            class="woocommerce-Price-amount amount"><bdi><?php echo e($totalPrice); ?>&nbsp;<span
                                                                     class="woocommerce-Price-currencySymbol">EUR</span></bdi></span></strong>
                                                 </td>
                                             </tr>

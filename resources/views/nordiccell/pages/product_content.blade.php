@@ -20,7 +20,8 @@
                             class="breadcrumb-separator"> &gt; </span>
                         @if(isset($product->subCategoryItem->name))
                             <span class="breadcrumb-content"><a
-                                    href="{{route('sub_category_item.products',['name' => $product->subCategoryItem->name])}}">{{$product->subCategoryItem->name}}</a></span><span
+                                    href="{{route('sub_category_item.products',['name' => $product->subCategoryItem->name])}}">{{$product->subCategoryItem->name}}</a></span>
+                            <span
                                 class="breadcrumb-separator"> &gt; </span>
                         @endif
                         <span
@@ -29,8 +30,8 @@
             </div>
 
             <div class="woocommerce-notices-wrapper"></div>
-            <div id="product-9201"
-                 class="product type-product post-9201 status-publish first onbackorder product_cat-stools has-post-thumbnail taxable shipping-taxable product-type-grouped">
+            <div id="product-9176"
+                 class="product type-product post-9176 status-publish first onbackorder product_cat-stools has-post-thumbnail taxable shipping-taxable product-type-grouped">
 
                 <div class="visuals">
                     <div class="images">
@@ -79,43 +80,86 @@
                     <div class="woocommerce-product-details__short-description">
                         <span>{{$product->description}}</span>
                     </div>
-                    <form class="cart grouped_form" action="" method="post" enctype='multipart/form-data'>
-                        @if(isset($product->bulk) && $product->bulk_part)
-                            <div class="product-info">
-                                <div class="product-info-price-units">
-                                    <div class="unit-data not-login">{{$product->bulk}} / {{$product->bulk_part}}</div>
-                                </div>
+                    {{--                    <form class="cart grouped_form" action="" method="post" enctype='multipart/form-data'>--}}
+                    @if(isset($product->bulk) && $product->bulk_part)
+                        <div class="product-info">
+                            <div class="product-info-price-units">
+                                <div class="unit-data not-login">{{$product->bulk}} / {{$product->bulk_part}}</div>
                             </div>
-                        @endif
-                        @if(isset($product->sub_products) && $product->sub_products->count() > 0)
-                            <table cellspacing="0" class="woocommerce-grouped-product-list group_table">
-                                <tbody>
-                                @foreach($product->sub_products as $detail)
-                                    <tr id="product-9180"
-                                        class="woocommerce-grouped-product-list-item product type-product post-9180 status-publish instock product_cat-stools has-post-thumbnail taxable shipping-taxable purchasable product-type-simple active ">
-                                        <td class="woocommerce-grouped-product-list-item__label">
-                                            <div class="item-product-children" data-id="9180">
-                                                <div class="image-product"><img
-                                                        src="{{$detail->getImageUrl()}}"
-                                                        alt="image-product"></div>
-                                                <div class="col-product-title"><label for="product-9180">{{$detail->color->name}}</label><span
-                                                        class="product-ref-no">{{$detail->ref_number}}</span></div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                            <div class="btn-show-all-variants">
-                                <span>Show all variants +</span>
-                            </div>
-                        @endif
+                        </div>
+                    @endif
+                    @if(isset($product->sub_products) && $product->sub_products->count() > 0)
+                        <table cellspacing="0" class="woocommerce-grouped-product-list group_table">
+                            <tbody>
+                            @foreach($product->sub_products as $detail)
+                                <tr id="product-9180"
+                                    class="woocommerce-grouped-product-list-item product type-product post-9180 status-publish instock product_cat-stools has-post-thumbnail taxable shipping-taxable purchasable product-type-simple active ">
+                                    <td class="woocommerce-grouped-product-list-item__label">
+                                        <div class="item-product-children" data-id="9180">
+                                            <div class="image-product"><img
+                                                    src="{{$detail->getImageUrl()}}"
+                                                    alt="image-product"></div>
+                                            <div class="col-product-title"><label
+                                                    for="product-9180">{{$detail->color->name}}</label><span
+                                                    class="product-ref-no">{{$detail->ref_number}}</span></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                        <div class="btn-show-all-variants">
+                            <span>Show all variants +</span>
+                        </div>
+                    @endif
+                    @if(auth()->user())
+                        <div>
+                            <form class="cart grouped_form" action="{{route('add_cart',['product' => $product->id])}}"
+                                  method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <div class="product-info">
+                                    <div class="product-info-price-units">
 
+                                        <p class="price">
+                                                <span class="woocommerce-Price-amount amount"><bdi>{{$product->price}}&nbsp;<span
+                                                            class="woocommerce-Price-currencySymbol">EUR</span></bdi></span>
+                                        </p>
+
+                                        <div class="unit-data">per box of 4 procedures</div>
+
+
+                                    </div>
+                                    <div class="product-info-stock">
+                                        <p class="stock in-stock">
+                                            <span class="stock-explainer"> In stock</span>
+                                            <i title="In stock" class="fas fa-circle"></i>
+                                        </p>
+                                    </div>
+                                </div>
+
+
+                                <div class="quantity buttons_added"><input type="button" value="-" class="minus">
+                                    <label class="screen-reader-text" for="quantity_66fbdc99a6fda">VitriFreeze ES
+                                        Kit quantity</label>
+                                    <input type="number" id="quantity_66fbdc99a6fda" class="input-text qty text"
+                                           name="quantity" value="1" aria-label="Product quantity" size="4" min="1"
+                                           max="" step="1" placeholder="" inputmode="numeric" autocomplete="off">
+                                    <input type="button" value="+" class="plus"></div>
+                                <button type="submit"
+                                        class="button alt">Add to
+                                    cart<img
+                                        class="add-to-cart-button-icon-small"
+                                        src="https://nordiccell.com/wp-content/themes/nordiccell/assets/dist/icons/cart-white.svg">
+                                </button>
+                            </form>
+                        </div>
+                    @else
                         <input type="hidden" name="add-to-cart" value="9201">
                         <a href="{{route('login')}}"
                            class="single_add_to_cart_button button alt button-login-to-shop">Login to shop</a>
                         <a href="../../register/index.htm" class="new-customer">New customer?</a>
-                    </form>
+                    @endif
+                    {{--                    </form>--}}
                     <div class="product-data-list__wrap">
                         <h3>Specifications</h3>
                         <div class="product-data-list__col col">
@@ -165,10 +209,16 @@
                                 rel="tag">Stools</a></span>
                     </div>
                 </div>
+
                 <div class="woocommerce-tabs-outer"></div>
                 <div class="product_description">
+                    <p>The Beta Stool 360/60 has a 60 mm cold foam upholstered seat, ensuring optimal sitting comfort.
+                        The stool is equipped with a 50 cm alu base and easy rolling castors.</p>
+                    <p>The seat diameter is 36 cm.</p>
                 </div>
             </div>
+
+
         </main>
     </div>
 </div>
